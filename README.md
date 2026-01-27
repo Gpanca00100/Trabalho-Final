@@ -1,4 +1,4 @@
-# Trabalhos – Aplicação Node.js + TypeScript
+# RentX - Clean Architecture com InversifyJS
 
 ## Alunos
 - **202426610050** – Arthur Esse Borges Xavier de Lima e Melo  
