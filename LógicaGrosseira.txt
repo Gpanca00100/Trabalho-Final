@@ -1,0 +1,220 @@
+class Cliente {
+
+  //talvez seja uma criar uma interface para Cliente, Carro, Aluguel, Sistema de Aluguel
+
+  private carroAtual?: Car;
+
+  constructor(
+    private id_user: string,
+    private nome: string,
+    private cpf: string,
+    private email: string,
+    private telefone: string
+  ) {}
+  //Imagino que esses métodos possam ir para uma classe, pra atender o SRP. Mas estou inseguro quanto a isso.
+  // Associa carro ao cliente
+  alugarCarro(carro: Car) {
+    this.carroAtual = carro;
+    console.log(`${this.nome} alugou o carro ${carro.modelo}`);
+  }
+
+  // Remove carro do cliente
+  devolverCarro() {
+    if (!this.carroAtual) {
+      console.log(`${this.nome} não possui carro para devolver`);
+      return;
+    }
+    console.log(`${this.nome} devolveu o carro ${this.carroAtual.modelo}`);
+    this.carroAtual = undefined;
+  }
+
+  exibirVeiculo() {
+    if (!this.carroAtual) {
+      console.log(`${this.nome} não possui carro alugado`);
+    } else {
+      console.log(this.carroAtual);
+    }
+  }
+}
+
+class Car {
+  private disponbilidade: boolean = true;
+
+  constructor(
+    private id_car: string,
+    private placa: string,
+    public modelo: string,
+    private fabricante: string,
+    private ano: number
+  ) {}
+
+  estaDisponivel(): boolean {
+    return this.disponbilidade;
+  }
+
+  disponibilizar() {
+    this.disponbilidade = true;
+  }
+
+  indisponibilizar() {
+    this.disponbilidade = false;
+  }
+}
+
+class Aluguel {
+  public ativo: boolean = true;
+
+  constructor(
+    public id_reserva: string,
+    public cliente: Cliente,
+    public carro: Car,
+    public data_inicio: Date,
+    public data_fim: Date
+  ) {
+    const diffHoras =
+      (data_fim.getTime() - data_inicio.getTime()) / (1000 * 60 * 60);
+    if (diffHoras < 24) {
+      throw new Error("O aluguel deve ter no mínimo 24 horas");
+    }
+  }
+
+  finalizar() {
+    if (!this.ativo) return;
+    this.carro.disponibilizar();
+    this.cliente.devolverCarro();
+    this.ativo = false;
+    console.log(`Aluguel ${this.id_reserva} finalizado com sucesso`);
+  }
+}
+
+class SistemaAluguel {
+  private alugueis: Aluguel[] = [];
+
+  registrarAluguel(
+    cliente: Cliente,
+    carro: Car,
+    dataInicio: Date,
+    dataFim: Date
+  ) {
+    if (!carro.estaDisponivel()) {
+      console.log(`Carro ${carro.modelo} indisponível para aluguel`);
+      return;
+    }
+
+    try {
+      const aluguel = new Aluguel(
+        crypto.randomUUID(),//cria tipo um hash "798f80d4-4df5-4a36-9a05-811a8ba8f74f", é legal, mas pouco prático para o trabalho
+        cliente,
+        carro,
+        dataInicio,
+        dataFim
+      );
+
+      carro.indisponibilizar();
+      cliente.alugarCarro(carro);
+      this.alugueis.push(aluguel);
+
+      console.log(
+        `Aluguel registrado: ${cliente['nome']} -> ${carro.modelo}`
+      );
+    } catch (err: any) {
+      console.log("Erro ao registrar aluguel:", err.message);
+    }
+  }
+
+  finalizarAluguel(id_reserva: string) {
+    const aluguel = this.alugueis.find((a) => a.id_reserva === id_reserva);
+    if (!aluguel) {
+      console.log("Aluguel não encontrado");
+      return;
+    }
+    aluguel.finalizar();
+  }
+
+  listarAlugueis() {
+    console.log(
+      this.alugueis.map((a) => ({
+        id: a.id_reserva,
+        cliente: a.cliente['nome'],
+        carro: a.carro.modelo,
+        inicio: a.data_inicio,
+        fim: a.data_fim,
+        ativo: a.ativo,
+      }))
+    );
+  }
+}
+/* ==================== INSTÂNCIAS ==================== */
+
+// Clientes
+const arthur = new Cliente(
+  "1da6d8f4",
+  "Arthur Esse",
+  "02261407173",
+  "arthur.xavier@aluno.ufr.edu.br",
+  "66992023869"
+);
+
+const bruna = new Cliente(
+  "2b3c",
+  "Gabriel Zardini",
+  "202426610001",
+  "gabriel.Zardini@aluno.ufr.edu.br",
+  "66997263638"
+);
+
+// Carros
+const c1 = new Car("Suz-2005-1", "KAF-2604", "Intruder 125cc", "Suzuki", 2005);
+const c2 = new Car("Hon-2018-1", "NFS-2804", "Civic", "Honda", 2018);
+const c3 = new Car("Toy-2020-1", "ZOO-2411", "Corolla", "Toyota", 2020);
+
+// Sistema
+const sistema = new SistemaAluguel();
+
+/* ==================== TESTES ==================== */
+
+console.log("\n--- Teste 1: Aluguel válido (>24h) ---");
+sistema.registrarAluguel(
+  arthur,
+  c1,
+  new Date("2026-02-01T10:30"),
+  new Date("2026-02-02T11:00")
+);
+arthur.exibirVeiculo();// o carro vai ficar com disponiblidade "false"
+sistema.listarAlugueis();
+
+console.log("\n--- Teste 2: Aluguel menor que 24h ---");
+sistema.registrarAluguel(
+  bruna,
+  c2,
+  new Date("2026-02-01T10:30"),
+  new Date("2026-02-02T09:00")
+); // Deve dar erro
+
+console.log("\n--- Teste 3: Aluguel carro indisponível ---");
+sistema.registrarAluguel(
+  bruna,
+  c1,
+  new Date("2026-02-02T12:00"),
+  new Date("2026-02-03T12:30")
+); // Deve alertar indisponível
+
+console.log("\n--- Teste 4: Finalizar aluguel ---");
+const aluguelId = sistema['alugueis'][0].id_reserva;
+sistema.finalizarAluguel(aluguelId);
+arthur.exibirVeiculo();
+console.log(`Carro disponível? ${c1.estaDisponivel()}`);
+
+console.log("\n--- Teste 5: Registrar novo aluguel após devolução ---");
+sistema.registrarAluguel(
+  bruna,
+  c1,
+  new Date("2026-02-03T10:00"),
+  new Date("2026-02-04T10:30")
+);
+bruna.exibirVeiculo();
+sistema.listarAlugueis();
+
+console.log("\n--- Teste 6: Finalizar aluguel inexistente ---");
+sistema.finalizarAluguel("id-inexistente"); // Deve alertar
+
