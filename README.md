@@ -40,32 +40,29 @@ A Inversão de Controle permite **desacoplar** as dependências por meio de inje
 
 ## 📁 Estrutura do Projeto
 
-src/
-├── domain/ # Entidades e Interfaces (contratos)
-│ ├── entities/
-│ └── repositories/ # Ex.: ICarRepository.ts, IRentalRepository.ts
-│
-├── application/ # Casos de Uso (Regras de negócio)
-│ ├── useCases/
-│ └── createRental/
-│ ├── CreateRentalUseCase.ts
-│ ├── CreateRentalDTO.ts
-│ └── CreateRentalUseCase.spec.ts # Testes unitários
-│
-├── infra/ # Implementações concretas
-│ ├── database/
-│ │ ├── prisma/ # Repositórios com PrismaClient
-│ │ └── inMemory/ # Repositórios fake (para testes)
-│ └── container/ # Configuração do InversifyJS
-│ ├── types.ts
-│ └── index.ts
-│
-├── adapters/ # Pontos de entrada
-│ └── cli/ # CLI para execução via terminal
-│ └── main.ts
-│
-└── main.ts # Bootstrap principal (opcional)
-
+- **src/**
+  - **domain/**
+    - **entities/**
+    - **repositories/**
+      - ICarRepository.ts
+      - IRentalRepository.ts
+  - **application/**
+    - **useCases/**
+      - **createRental/**
+        - CreateRentalUseCase.ts
+        - CreateRentalDTO.ts
+        - CreateRentalUseCase.spec.ts
+  - **infra/**
+    - **database/**
+      - **prisma/**
+      - **inMemory/**
+    - **container/**
+      - types.ts
+      - index.ts
+  - **adapters/**
+    - **cli/**
+      - main.ts
+  - **main.ts**
 
 ---
 
