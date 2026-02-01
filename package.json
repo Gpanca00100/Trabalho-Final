@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "testeentidades": "vitest src/domain/entities"
+    "testeentidades": "vitest src/domain/entities",
+    "teste": "vitest src/application/useCases/createRental/CreateRentalUseCase.spec.ts"
   },
   "repository": {
     "type": "git",

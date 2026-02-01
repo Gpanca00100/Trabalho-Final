@@ -1,10 +1,6 @@
-import { ICliente } from "../../../domain/entities/Cliente";
-import { ICar } from "../../../domain/entities/Car";
-
 export interface CreateRentalDTO {
-  cliente: ICliente;
-  carro: ICar;
+  clienteId: string;
+  carroPlaca: string;
   data_inicio: Date;
   data_fim: Date;
 }
-

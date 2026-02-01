@@ -1,33 +1,36 @@
-import { IAluguelRepository } from "../../../domain/repositories/IAluguelRepository";
-import { Aluguel } from "../../../domain/entities/Aluguel";
-import { CreateRentalDTO } from "./CreateRentalDTO";
-import { ICarRepository } from "../../../domain/repositories/ICarRepository";
-
+import { IAluguelRepository } from "../../../domain/repositories/IAluguelRepository.js";
+import { ICarRepository } from "../../../domain/repositories/ICarRepository.js";
+import { IClienteRepository } from "../../../domain/repositories/IClienteRepository.js";
+import { Aluguel } from "../../../domain/entities/Aluguel.js";
+import { CreateRentalDTO } from "./CreateRentalDTO.js";
 
 export class CreateRentalUseCase {
-  constructor(private aluguelRepo: IAluguelRepository,
-              private carRepo: ICarRepository) {}
+  constructor(
+    private aluguelRepo: IAluguelRepository,
+    private carRepo: ICarRepository,
+    private clienteRepo: IClienteRepository
+  ) {}
 
   async execute({
-    cliente,
-    carro,
+    clienteId,
+    carroPlaca,
     data_inicio,
     data_fim
   }: CreateRentalDTO): Promise<Aluguel> {
 
-    const carroEncontrado =
-    this.carRepo.findByPlaca(carro.placa);
+    const cliente = await this.clienteRepo.findById(clienteId);
+    if (!cliente) {
+      throw new Error("Cliente não encontrado");
+    }
 
-    if (!carroEncontrado) {
+    const carro = await this.carRepo.findByPlaca(carroPlaca);
+    if (!carro) {
       throw new Error("Carro não encontrado");
     }
 
-    if (!carroEncontrado.disponibilidade) {
+    if (!carro.disponibilidade) {
       throw new Error("Carro indisponível");
     }
-
-
-
 
     const aluguelAberto =
       await this.aluguelRepo.buscarAluguelAbertoPorCliente(cliente.id_user);
@@ -40,13 +43,13 @@ export class CreateRentalUseCase {
       throw new Error("Data final deve ser posterior à inicial");
     }
 
-    carroEncontrado.disponibilidade = false;
-    this.carRepo.update(carroEncontrado);
+    carro.disponibilidade = false;
+    await this.carRepo.update(carro);
 
     const aluguel = new Aluguel(
       crypto.randomUUID(),
       cliente,
-      carroEncontrado,
+      carro,
       data_inicio,
       data_fim
     );
