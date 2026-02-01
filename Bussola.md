@@ -72,24 +72,24 @@ Este documento define:
 
 ## 🔹 PASSO 1 — Domínio (Domain Layer)
 📁 `src/domain`  
-**Responsável:** Pessoa A
+**Responsável:** Arthur Esse - concluído em 31/01/2026_
 
 > Base do sistema. Nenhuma dependência externa é permitida.
 
-- [ ] **feat(domain): add Car entity**  
-  _Responsável: Pessoa A_
+- [x] **feat(domain): add Car entity**  
+  _Responsável: Arthur Esse - concluído em 31/01/2026_
 
-- [ ] **feat(domain): add Rental entity**  
-  _Responsável: Pessoa A_
+- [x] **feat(domain): add Rental entity**  
+  _Responsável: Arthur Esse - concluído em 31/01/2026_
 
-- [ ] **feat(domain): define ICarRepository interface**  
-  _Responsável: Pessoa A_
+- [x] **feat(domain): define ICarRepository interface**  
+  _Responsável: Arthur Esse - concluído em 31/01/2026_
 
-- [ ] **feat(domain): define IRentalRepository interface**  
-  _Responsável: Pessoa A_
+- [x] **feat(domain): define IRentalRepository interface**  
+  _Responsável: Arthur Esse - concluído em 31/01/2026_
 
-- [ ] **test(domain): validate domain entities structure** *(opcional)*  
-  _Responsável: Pessoa A_
+- [x] **test(domain): validate domain entities structure** *(opcional)*  
+  _Responsável: Arthur Esse - concluído em 02/02/2026_
 
 ✅ *Checkpoint*:
 - Domínio isolado
