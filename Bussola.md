@@ -89,7 +89,7 @@ Este documento define:
   _Responsável: Arthur Esse - concluído em 31/01/2026_
 
 - [x] **test(domain): validate domain entities structure** *(opcional)*  
-  _Responsável: Arthur Esse - concluído em 02/02/2026_
+  _Responsável: Arthur Esse - concluído em 01/02/2026_
 
 ✅ *Checkpoint*:
 - Domínio isolado
@@ -99,15 +99,15 @@ Este documento define:
 
 ## 🔹 PASSO 2 — Caso de Uso (Application Layer)
 📁 `src/application/useCases/createRental`  
-**Responsável:** Pessoa A
+**Responsável:** Arthur Esse - concluído em 01/02/2026_
 
 > Implementação da regra de negócio.
 
-- [ ] **feat(usecase): create CreateRental DTO**  
-  _Responsável: Pessoa A_
+- [x] **feat(usecase): create CreateRental DTO**  
+  _Responsável: Arthur Esse - concluído em 01/02/2026_
 
-- [ ] **feat(usecase): implement CreateRentalUseCase**  
-  _Responsável: Pessoa A_
+- [x] **feat(usecase): implement CreateRentalUseCase**  
+  _Responsável: Arthur Esse - concluído em 01/02/2026_
   - Validar disponibilidade do carro
   - Validar aluguel em aberto do usuário
   - Garantir duração mínima de 24 horas
@@ -127,13 +127,16 @@ Este documento define:
 
 > Prova prática da Clean Architecture.
 
-- [ ] **feat(test): add InMemoryCarRepository**  
-  _Responsável: Pessoa A_
+- [x] **feat(test): add InMemoryClienteRepository**  
+  _Responsável: Arthur Esse - concluído em 01/02/2026_
 
-- [ ] **feat(test): add InMemoryRentalRepository**  
-  _Responsável: Pessoa A_
+- [x] **feat(test): add InMemoryCarRepository**  
+  _Responsável: Arthur Esse - concluído em 01/02/2026_
 
-- [ ] **test(usecase): add CreateRentalUseCase unit tests**  
+- [x] **feat(test): add AluguelRepositoryMemory**  
+  _Responsável: Arthur Esse - concluído em 01/02/2026_
+
+- [x] **test(usecase): add CreateRentalUseCase unit tests**  
   _Responsável: Pessoa A_
   - Cenário de sucesso
   - Carro indisponível
