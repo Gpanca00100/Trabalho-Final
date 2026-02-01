@@ -1,0 +1,27 @@
+{
+  "name": "trabalho-final",
+  "version": "1.0.0",
+  "description": "- **202426610050** – Arthur Esse Borges Xavier de Lima e Melo  \r - **202426610030** – Gabriel Zardini Dourado Cunha",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "testeentidades": "vitest src/domain/entities"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gpanca00100/Trabalho-Final.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Gpanca00100/Trabalho-Final/issues"
+  },
+  "homepage": "https://github.com/Gpanca00100/Trabalho-Final#readme",
+  "devDependencies": {
+    "@types/node": "^25.1.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
