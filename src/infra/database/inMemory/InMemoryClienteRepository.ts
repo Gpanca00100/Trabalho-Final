@@ -1,5 +1,5 @@
-import { IClienteRepository } from "../../../domain/repositories/IClienteRepository.js";
-import { ICliente } from "../../../domain/entities/Cliente.js";
+import type { IClienteRepository } from "../../../domain/repositories/IClienteRepository.js";
+import type { ICliente } from "../../../domain/entities/Cliente.js";
 
 export class InMemoryClienteRepository implements IClienteRepository {
   private clientes: ICliente[] = [];

@@ -1,5 +1,5 @@
-import { ICarRepository } from "../../../domain/repositories/ICarRepository.js";
-import { ICar } from "../../../domain/entities/Car.js";
+import type{ ICarRepository } from "../../../domain/repositories/ICarRepository.js";
+import type { ICar } from "../../../domain/entities/Car.js";
 
 export class InMemoryCarRepository implements ICarRepository {
   private carros: ICar[] = [];

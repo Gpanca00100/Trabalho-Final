@@ -1,13 +1,14 @@
 import { describe, it, expect, beforeEach } from "vitest";
 
-import { CreateRentalUseCase } from "./CreateRentalUseCase";
+import { CreateRentalUseCase } from "./CreateRentalUseCase.js";
 
-import { InMemoryCarRepository } from "../../../infra/database/inMemory/InMemoryCarRepository";
-import { InMemoryClienteRepository } from "../../../infra/database/inMemory/InMemoryClienteRepository";
-import { AluguelRepositoryMemory } from "../../../infra/database/inMemory/AluguelRepositoryMemory";
+import { InMemoryCarRepository } from "../../../infra/database/inMemory/InMemoryCarRepository.js";
+import { InMemoryClienteRepository } from "../../../infra/database/inMemory/InMemoryClienteRepository.js";
+import { AluguelRepositoryMemory } from "../../../infra/database/inMemory/AluguelRepositoryMemory.js";
 
-import { Cliente } from "../../../domain/entities/Cliente";
-import { Car } from "../../../domain/entities/Car";
+import { Cliente } from "../../../domain/entities/Cliente.js";
+import { Car } from "../../../domain/entities/Car.js";
+import { ConsoleLogger } from "../../../infra/logger/ConsoleLogger.js";
 
 
 
@@ -15,16 +16,18 @@ let createRentalUseCase: CreateRentalUseCase;
 let carRepo: InMemoryCarRepository;
 let clienteRepo: InMemoryClienteRepository;
 let aluguelRepo: AluguelRepositoryMemory;
-
+let logger: ConsoleLogger;
 beforeEach(() => {
   carRepo = new InMemoryCarRepository();
   clienteRepo = new InMemoryClienteRepository();
   aluguelRepo = new AluguelRepositoryMemory();
+  logger = new ConsoleLogger();
 
   createRentalUseCase = new CreateRentalUseCase(
     aluguelRepo,
     carRepo,
-    clienteRepo
+    clienteRepo,
+    logger
   );
 });
 

@@ -1,5 +1,5 @@
-import { IAluguelRepository } from "../../../domain/repositories/IAluguelRepository";
-import { Aluguel, StatusAluguel } from "../../../domain/entities/Aluguel";
+import type { IAluguelRepository } from "../../../domain/repositories/IAluguelRepository.js";
+import { Aluguel, StatusAluguel } from "../../../domain/entities/Aluguel.js";
 
 export class AluguelRepositoryMemory implements IAluguelRepository {
   private alugueis: Aluguel[] = [];

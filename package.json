@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "testeentidades": "vitest src/domain/entities",
-    "teste": "vitest src/application/useCases/createRental/CreateRentalUseCase.spec.ts"
+    "teste": "vitest src/application/useCases/createRental/CreateRentalUseCase.spec.ts",
+    "export": "tsx src/exportFiles.ts"
   },
   "repository": {
     "type": "git",

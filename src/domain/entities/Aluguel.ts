@@ -1,5 +1,5 @@
-import { ICliente } from "./Cliente";
-import { ICar } from "./Car";
+import type { ICliente } from "./Cliente.js";
+import type { ICar } from "./Car.js";
 export enum StatusAluguel {
   ABERTO = "ABERTO",
   FINALIZADO = "FINALIZADO"

@@ -14,7 +14,7 @@
 
     "strict": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": false,
+    "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "skipLibCheck": true
   }
