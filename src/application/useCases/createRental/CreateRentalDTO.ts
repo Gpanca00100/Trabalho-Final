@@ -1,6 +1,5 @@
 export interface CreateRentalDTO {
   clienteId: string;
-  carroPlaca: string;
-  data_inicio: Date;
+  carroId: string; 
   data_fim: Date;
 }

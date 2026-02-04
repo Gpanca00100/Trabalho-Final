@@ -1,5 +1,6 @@
-import { Cliente } from "../Cliente.js";
+import { Cliente } from "../Cliente.js"; 
 import { describe, it, expect } from 'vitest';
+
 describe("Cliente Entity", () => {
   it("Deve Criar um Cliente com os dados corretos", () => {
     const cliente = new Cliente(
@@ -10,7 +11,7 @@ describe("Cliente Entity", () => {
       "66996123456"
     );
 
-    expect(cliente.id_user).toBe("Clinte_74123");
+    expect(cliente.id).toBe("Clinte_74123");
     expect(cliente.nome).toBe("Edmilson Pe de Chumbo");
     expect(cliente.cpf).toBe("12345678900");
     expect(cliente.email).toBe("Edmilsonpdc@email.com");

@@ -1,72 +1,77 @@
-import type { IAluguelRepository } from "../../../domain/repositories/IAluguelRepository.js";
+import { inject, injectable } from "inversify";
+import { CreateRentalDTO } from "./CreateRentalDTO.js";
+
+// 👇 TODOS ESSES IMPORTS AGORA SÃO 'import type'
 import type { ICarRepository } from "../../../domain/repositories/ICarRepository.js";
 import type { IClienteRepository } from "../../../domain/repositories/IClienteRepository.js";
-import { Aluguel } from "../../../domain/entities/Aluguel.js";
-import type { CreateRentalDTO } from "./CreateRentalDTO.js";
-import type { Logger } from "../../../domain/Logger/Logger.js";
-import { ConsoleLogger } from "../../../infra/logger/ConsoleLogger.js";
+import type { IAluguelRepository } from "../../../domain/repositories/IAluguelRepository.js";
+import type { Logger } from "../../../domain/Logger/Logger.js"; 
+// 👆 FIM DOS TIPOS
 
+import { Aluguel } from "../../../domain/entities/Aluguel.js";
+import { AppError } from "../../../domain/erros/erro.js";
+
+@injectable()
 export class CreateRentalUseCase {
   constructor(
-    private aluguelRepo: IAluguelRepository,
-    private carRepo: ICarRepository,
-    private clienteRepo: IClienteRepository,
-    private logger: Logger
+    @inject("IAluguelRepository") private aluguelRepository: IAluguelRepository,
+    @inject("ICarRepository") private carRepository: ICarRepository,
+    @inject("IClienteRepository") private clienteRepository: IClienteRepository,
+    @inject("Logger") private logger: Logger
   ) {}
 
   async execute({
     clienteId,
-    carroPlaca,
-    data_inicio,
-    data_fim
+    carroId,
+    data_fim,
   }: CreateRentalDTO): Promise<Aluguel> {
-    this.logger.info("Iniciando criação de aluguel");
+    
+    this.logger.log(`[UseCase] Tentando criar aluguel para Cliente ${clienteId} e Carro ${carroId}`);
 
-    const cliente = await this.clienteRepo.findById(clienteId);
+    // 1. Verificar se cliente existe
+    const cliente = await this.clienteRepository.findById(clienteId);
     if (!cliente) {
-      this.logger.error("Usuário não existente")
-      throw new Error("Cliente não encontrado");
+      throw new AppError("Cliente não encontrado", 404);
     }
 
-    const carro = await this.carRepo.findByPlaca(carroPlaca);
+    // 2. Verificar se carro existe
+    const carro = await this.carRepository.findById(carroId);
     if (!carro) {
-      this.logger.error("Carro não existente")
-      throw new Error("Carro não encontrado");
+      throw new AppError("Carro não encontrado", 404);
     }
 
+    // 3. Regra: Carro indisponível
     if (!carro.disponibilidade) {
-      this.logger.warn("Carro Existente. Mas indisponível")
-      throw new Error("Carro indisponível");
+      throw new AppError("O carro escolhido não está disponível", 400);
     }
 
-    const aluguelAberto =
-      await this.aluguelRepo.buscarAluguelAbertoPorCliente(cliente.id_user);
-
+    // 4. Regra: Aluguel em aberto
+    const aluguelAberto = await this.aluguelRepository.buscarAluguelAbertoPorCliente(cliente.id);
     if (aluguelAberto) {
-      this.logger.warn("Cliente válido. Mas aluguel em aberto")
-      throw new Error("Cliente já possui um aluguel em aberto");
+      throw new AppError("Você já tem um aluguel em andamento", 400);
     }
 
-    if (data_fim <= data_inicio) {
-      this.logger.warn("Data final deve ser posterior à inicial")
-      throw new Error("Data final deve ser posterior à inicial");
+    // 5. Regra: Duração mínima 24h
+    const dataInicio = new Date();
+    const diffEmMilissegundos = data_fim.getTime() - dataInicio.getTime();
+    const diffEmHoras = diffEmMilissegundos / (1000 * 60 * 60);
+
+    if (diffEmHoras < 24) {
+      throw new AppError("O aluguel deve ter duração mínima de 24 horas", 400);
     }
 
+    // 6. Criar Entidade
+    const novoAluguel = Aluguel.create(cliente, carro, dataInicio, data_fim);
 
-    this.logger.info(`Atualizando disponibilidade do carro ${carro.placa}`);
-    carro.disponibilidade = false;
-    await this.carRepo.update(carro);
+    // 7. Salvar
+    await this.aluguelRepository.salvar(novoAluguel);
 
-    const aluguel = new Aluguel(
-      crypto.randomUUID(),
-      cliente,
-      carro,
-      data_inicio,
-      data_fim
-    );
+    // 8. Atualizar Carro
+    carro.alugar(); 
+    await this.carRepository.update(carro);
 
-    await this.aluguelRepo.salvar(aluguel);
-    this.logger.info(`Aluguel criado com sucesso (cliente=${cliente.id_user}, carro=${carro.placa})`);
-    return aluguel;
+    this.logger.log(`[UseCase] Aluguel ${novoAluguel.id} criado com sucesso!`);
+    
+    return novoAluguel;
   }
 }

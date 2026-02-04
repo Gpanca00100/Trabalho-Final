@@ -153,21 +153,17 @@ Este documento define:
 
 ## 🔹 PASSO 4 — Infraestrutura Real (Prisma + SQLite)
 📁 `infra/database/prisma`  
-**Responsável:** Pessoa B
+**Responsável:** Gabriel Zardini
 
 > Persistência real sem alterar regras de negócio.
 
-- [ ] **chore(prisma): configure prisma and sqlite**  
-  _Responsável: Pessoa B_
+- [x] **chore(prisma): configure prisma and sqlite** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
-- [ ] **chore(prisma): create Car and Rental models**  
-  _Responsável: Pessoa B_
+- [x] **chore(prisma): create Car and Rental models** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
-- [ ] **feat(infra): implement PrismaCarRepository**  
-  _Responsável: Pessoa B_
+- [x] **feat(infra): implement PrismaCarRepository** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
-- [ ] **feat(infra): implement PrismaRentalRepository**  
-  _Responsável: Pessoa B_
+- [x] **feat(infra): implement PrismaRentalRepository** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
 ✅ *Checkpoint*:
 - Prisma funcionando
@@ -177,15 +173,13 @@ Este documento define:
 
 ## 🔹 PASSO 5 — InversifyJS (IoC Container)
 📁 `infra/container`  
-**Responsável:** Pessoa B
+**Responsável:** Gabriel Zardini
 
 > Aplicação do DIP e IoC.
 
-- [ ] **feat(container): configure inversify container**  
-  _Responsável: Pessoa B_
+- [x] **feat(container): configure inversify container** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
-- [ ] **feat(container): bind repositories implementations**  
-  _Responsável: Pessoa B_
+- [x] **feat(container): bind repositories implementations** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
 ✅ *Checkpoint*:
 - Implementações trocáveis apenas via container
@@ -194,15 +188,13 @@ Este documento define:
 
 ## 🔹 PASSO 6 — Interface CLI (Adapters Layer)
 📁 `src/adapters/cli`  
-**Responsável:** Pessoa B
+**Responsável:** Gabriel Zardini
 
 > Ponto de entrada da aplicação.
 
-- [ ] **feat(cli): implement rental creation CLI**  
-  _Responsável: Pessoa B_
+- [x] **feat(cli): implement rental creation CLI** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
-- [ ] **chore(cli): improve CLI output**  
-  _Responsável: Pessoa B_
+- [x] **chore(cli): improve CLI output** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
 ✅ *Checkpoint*:
 - Aplicação executável via terminal
@@ -210,18 +202,15 @@ Este documento define:
 ---
 
 ## 🔹 PASSO 7 — Revisão Final
-**Responsável:** Pessoa A + Pessoa B
+**Responsável:** Gabriel Zardini + Arthur Esse
 
 > Refinamento e entrega.
 
-- [ ] **refactor: improve folder organization**  
-  _Responsável: Pessoa A + Pessoa B_
+- [x] **refactor: improve folder organization** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
-- [ ] **fix: adjust dependency direction violations**  
-  _Responsável: Pessoa A + Pessoa B_
+- [x] **fix: adjust dependency direction violations** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
-- [ ] **docs: update README with execution steps**  
-  _Responsável: Pessoa A + Pessoa B_
+- [x] **docs: update README with execution steps** _Responsável: Gabriel Zardini - concluído em 03/02/2026_
 
 ---
 

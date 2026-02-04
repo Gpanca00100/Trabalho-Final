@@ -1,5 +1,5 @@
-import type { ICliente } from "../entities/Cliente.js";
+import type { Cliente } from "../entities/Cliente.js";
 
 export interface IClienteRepository {
-  findById(id: string): Promise<ICliente | null>;
+  findById(id: string): Promise<Cliente | null>;
 }

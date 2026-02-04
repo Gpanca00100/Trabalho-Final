@@ -1,19 +1,23 @@
-export interface ICar {
-  id_car: string;
-  placa: string;
-  modelo: string;
-  marca: string;
-  ano: number;
-  disponibilidade: boolean;
-}
-
-export class Car implements ICar {
+export class Car {
   constructor(
-    public id_car: string,
+    public id: string, 
     public placa: string,
     public modelo: string,
     public marca: string,
     public ano: number,
     public disponibilidade: boolean
   ) {}
+
+  // Lógica de Negócio: O carro sabe como ser alugado
+  alugar(): void {
+    if (!this.disponibilidade) {
+      throw new Error("Carro indisponível para aluguel.");
+    }
+    this.disponibilidade = false;
+  }
+
+  // Lógica de Negócio: O carro sabe como ser devolvido
+  devolver(): void {
+    this.disponibilidade = true;
+  }
 }

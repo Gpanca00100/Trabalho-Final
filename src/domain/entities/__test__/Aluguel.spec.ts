@@ -1,20 +1,20 @@
+import { describe, it, expect } from "vitest";
 import { Aluguel, StatusAluguel } from "../Aluguel.js";
 import { Cliente } from "../Cliente.js";
 import { Car } from "../Car.js";
-import { describe, it, expect } from 'vitest';
 
 describe("Aluguel Entity", () => {
-  it("Deve Finalizar um Alguel corretametne", () => {
+  it("Deve criar uma instância de aluguel corretamente", () => {
     const cliente = new Cliente(
-      "Clinte_74123",
+      "user-123",
       "Edmilson Pe de Chumbo",
       "12345678900",
-      "Edmilsonpdc@email.com",
-      "66996123456"
+      "email@teste.com",
+      "999999999"
     );
 
     const carro = new Car(
-      "Maquina-du-Mau-666",
+      "car-666",
       "SAT-0666",
       "Chevette",
       "Chevrolet",
@@ -22,26 +22,24 @@ describe("Aluguel Entity", () => {
       true
     );
 
-    const aluguel = new Aluguel(
-      "a1",
+    const aluguel = Aluguel.create(
       cliente,
       carro,
       new Date("2026-01-01"),
       new Date("2026-01-05")
     );
 
-    aluguel.finalizar();
-
-    expect(aluguel.status).toBe(StatusAluguel.FINALIZADO);
-    expect(carro.disponibilidade).toBe(true);
+    expect(aluguel.id).toBeDefined();
+    expect(aluguel.status).toBe(StatusAluguel.ABERTO);
+    expect(aluguel.cliente.nome).toBe("Edmilson Pe de Chumbo");
   });
 
-  it("Não deve finalizar um aluguel já finalizaddo", () => {
-    const cliente = new Cliente("c1", "João", "123", "x", "y");
-    const carro = new Car("car1", "ABC", "Onix", "GM", 2022, true);
+  it("Deve finalizar um aluguel corretamente e devolver o carro", () => {
+    const cliente = new Cliente("user-1", "João", "123", "x", "y");
+    const carro = new Car("car-1", "ABC", "Onix", "GM", 2022, false);
 
     const aluguel = new Aluguel(
-      "a1",
+      "aluguel-1",
       cliente,
       carro,
       new Date(),
@@ -50,6 +48,24 @@ describe("Aluguel Entity", () => {
 
     aluguel.finalizar();
 
-    expect(() => aluguel.finalizar()).toThrow();
+    expect(aluguel.status).toBe(StatusAluguel.FINALIZADO);
+    expect(aluguel.data_devolucao).toBeInstanceOf(Date);
+    expect(carro.disponibilidade).toBe(true);
+  });
+
+  it("Não deve permitir finalizar um aluguel que já foi finalizado", () => {
+    const cliente = new Cliente("user-1", "João", "123", "x", "y");
+    const carro = new Car("car-1", "ABC", "Onix", "GM", 2022, true);
+
+    const aluguel = new Aluguel(
+      "aluguel-1",
+      cliente,
+      carro,
+      new Date(),
+      new Date(),
+      StatusAluguel.FINALIZADO
+    );
+
+    expect(() => aluguel.finalizar()).toThrow("Aluguel já finalizado");
   });
 });

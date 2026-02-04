@@ -1,7 +1,7 @@
-import type { ICar } from "../entities/Car.js";
+import type { Car } from "../entities/Car.js";
 
 export interface ICarRepository {
-  findById(id: string): Promise<ICar | null>;
-  findByPlaca(placa: string): Promise<ICar | null>;
-  update(car: ICar): void;
+  findById(id: string): Promise<Car | null>;
+  findByPlaca(placa: string): Promise<Car | null>;
+  update(car: Car): void;
 }

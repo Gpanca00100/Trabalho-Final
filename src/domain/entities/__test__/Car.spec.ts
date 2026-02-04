@@ -1,5 +1,6 @@
-import { Car } from "../Car.js";
 import { describe, it, expect } from 'vitest';
+import { Car } from "../Car.js"; 
+
 describe("Car Entity", () => {
   it("Deve criar um carro com as corretas propriedades", () => {
     const car = new Car(
@@ -11,7 +12,7 @@ describe("Car Entity", () => {
       true
     );
 
-    expect(car.id_car).toBe("Maquina-du-Mau-666");
+    expect(car.id).toBe("Maquina-du-Mau-666");
     expect(car.placa).toBe("SAT-0666");
     expect(car.disponibilidade).toBe(true);
   });

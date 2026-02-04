@@ -1,5 +1,5 @@
 /*Essa função não faz parte do projeto, tem apenas por finalidade extrair o nome
-dos arquivos e seus testos, quando necessário. Pode ser útil para montar documentação */
+dos arquivos e seus textos, quando necessário. Pode ser útil para montar documentação */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -45,7 +45,7 @@ function generateSingleFile(): void {
   }
 
   fs.writeFileSync(OUTPUT_FILE, output, "utf-8");
-  console.log("✅ Arquivos .ts exportados (node_modules ignorado)");
+  console.log(" Arquivos .ts exportados (node_modules ignorado)");
 }
 
 generateSingleFile();
