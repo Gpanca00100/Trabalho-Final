@@ -1,12 +1,12 @@
 import { inject, injectable } from "inversify";
 import { CreateRentalDTO } from "./CreateRentalDTO.js";
 
-// 👇 TODOS ESSES IMPORTS AGORA SÃO 'import type'
+//  TODOS ESSES IMPORTS AGORA SÃO 'import type'
 import type { ICarRepository } from "../../../domain/repositories/ICarRepository.js";
 import type { IClienteRepository } from "../../../domain/repositories/IClienteRepository.js";
 import type { IAluguelRepository } from "../../../domain/repositories/IAluguelRepository.js";
 import type { Logger } from "../../../domain/Logger/Logger.js"; 
-// 👆 FIM DOS TIPOS
+//  FIM DOS TIPOS
 
 import { Aluguel } from "../../../domain/entities/Aluguel.js";
 import { AppError } from "../../../domain/erros/erro.js";
